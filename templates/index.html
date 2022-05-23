@@ -1,0 +1,102 @@
+
+<html>
+<head>
+<title>Web Based Image Processor</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />        
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js">
+</script>
+
+<script>
+        function doThis(text){
+            document.getElementById('TA').value += text + ', ';
+        }
+
+        function doThat(id, textmap, text){
+            if(document.getElementById(id).value == textmap)
+                 {alert(textmap)}
+             else
+                {document.getElementById('TA').value += text + document.getElementById(id).value + ', ' }
+        }
+</script>
+<style>
+    th, td {
+                width:2500px;
+                padding:5px
+             
+            }
+</style>
+</head>
+<body>
+<p><h1 align="center" style="color:#5bc0de;" >WEB BASED IMAGE PROCESSOR</h1></p>
+<div class="container">
+<div class="row">
+    <p>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul>
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+    </p>
+    {% if filename %}
+        <div>
+            <img src="{{ url_for('display_image', filename=filename) }}">
+        </div>
+    {% endif %}
+
+    <h3>Select an image to upload</h3>
+    <form method="post" action="/" enctype="multipart/form-data">
+        <dl>
+            <p>
+                <input type="file" name="file" class="form-control" autocomplete="off">
+            </p>
+        </dl>
+
+    <h3>Select operations to perform</h3>
+    <textarea name ="text_area" id="TA" rows="2" cols="50" ></textarea><br><br>
+    <table cellspacing="15">
+        <tr>
+            <td><input type="button" value="Flip Horizontal" onclick="doThis('horizontal')"></td>
+            <td><input type="button" value="Flip Vertical" onclick="doThis('vertical')"></td>
+        </tr>
+        <tr>
+            <td><input type="button" value="Rotate" onclick="doThat('DT','Enter degree','rotate ')">
+                <input type="text" id = "DT" name="rotate_degree" value="Enter degree" size="13" onfocus="if (this.value == 'Enter degree') {this.value = '';}"></td>
+            <td><input type="button" value="FixedGrayscale" onclick="doThis('fixedgrayscale ')"></td>
+        </tr>
+        <tr>
+            <td><input type="button" value="Grayscale" onclick="doThat('GV','Enter Grayscale value','valuegrayscale ')">
+                <input type="text" id="GV" value="Enter Grayscale value" size="20" onfocus="if (this.value == 'Enter Grayscale value') {this.value = '';}">
+            </td>
+            <td><input type="button" value="Saturate" onclick="doThis('saturate ')"></td>
+        </tr>
+        <tr>
+            <td><input type="button" value="Desaturate" onclick="doThis('desaturate ')"></td>
+            <td><input type="button" value="Resize by Size" onclick="doThat('RXY', 'Enter x and y','resizexy ')">
+                <input type="text" id="RXY" value="Enter x and y" size="17" onfocus="if (this.value == 'Enter x and y') {this.value = '';}">
+            </td>
+        </tr>
+        <tr>
+            <td><input type="button" value="Resize by Percentage" onclick="doThat('RP','Enter Percentage','resizebypercent ')">
+                <input type="text" id="RP" value="Enter Percentage" size="17" onfocus="if (this.value == 'Enter Percentage') {this.value = '';}">
+            </td>
+            <td><input type="button" value="Generate Thumbnail" onclick="doThis('thumbnail')"></td>
+        </tr>
+        <tr>
+            <td><input type="button" value="Rotate Left" onclick="doThis('left ')"></td>
+            <td><input type="button" value="Rotate Right" onclick="doThis('right ')"></td>
+        </tr>
+    </table>
+    <br>
+
+        <p>
+            <input type="submit" name="submit_button" value="Tranform" class="btn btn-info">&nbsp;&nbsp;
+        </p>
+    </form>
+</div>
+</div>
+</body>
+</html>
