@@ -9,5 +9,7 @@ run below commands
 Python3 -m venv myenv
 . myenv/bin/activate
 pip install Flask
+python3 -m pip install --upgrade pip
+python3 -m pip install --upgrade Pillow
 export FLASK_APP=app.py
 Flask run
